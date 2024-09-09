@@ -18,9 +18,9 @@ const ProfilePage = ({ user, setUser }) => {
   };
 
   return (
-    <div>
+    <div className="py-10 flex justify-center">
       <div>
-        <h1>프로필 수정</h1>
+        <h1 className="font-bold mb-3 text-2xl">프로필 수정</h1>
         <form onSubmit={handleSubmit}>
           <div>
             <label>닉네임</label>
@@ -29,9 +29,15 @@ const ProfilePage = ({ user, setUser }) => {
               type="text"
               value={nickname}
               onChange={handleNicknameChange}
+              className="w-full shadow-md p-2 rounded-xl"
             />
           </div>
-          <button type="submit">프로필 업데이트</button>
+          <button
+            type="submit"
+            className="w-full shadow-md p-2 bg-black text-white rounded-xl"
+          >
+            프로필 업데이트
+          </button>
         </form>
       </div>
     </div>

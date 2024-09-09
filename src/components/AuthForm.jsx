@@ -38,7 +38,7 @@ const AuthForm = ({ mode, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex gap-3 flex-col">
       <input
         type="text"
         name="id"
@@ -46,6 +46,7 @@ const AuthForm = ({ mode, onSubmit }) => {
         onChange={handleChange}
         placeholder="아이디"
         required
+        className="w-full shadow-md p-2 rounded-xl"
       />
       <input
         type="password"
@@ -54,6 +55,7 @@ const AuthForm = ({ mode, onSubmit }) => {
         onChange={handleChange}
         placeholder="비밀번호"
         required
+        className="w-full shadow-md p-2 rounded-xl"
       />
       {mode === "signup" && ( // 회원가입이라면 닉네임 인풋도 보이게
         <input
@@ -63,9 +65,15 @@ const AuthForm = ({ mode, onSubmit }) => {
           onChange={handleChange}
           placeholder="닉네임"
           required
+          className="w-full shadow-md p-2 rounded-xl"
         />
       )}
-      <button type="submit">{mode === "login" ? "로그인" : "회원가입"}</button>
+      <button
+        type="submit"
+        className="w-full shadow-md p-2 bg-black text-white rounded-xl"
+      >
+        {mode === "login" ? "로그인" : "회원가입"}
+      </button>
     </form>
   );
 };

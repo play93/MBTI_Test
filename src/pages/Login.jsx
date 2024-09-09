@@ -17,13 +17,16 @@ const Login = ({ setUser }) => {
     }
   };
   return (
-    <section>
+    <section className="py-10 flex justify-center">
       <div>
-        <h1>로그인</h1>
+        <h1 className="font-bold mb-3 text-2xl">로그인</h1>
         <AuthForm mode="login" onSubmit={handleLogin} />
         <div>
-          <p>
-            계정이 없으신가요? <Link to="/register">회원가입</Link>
+          <p className="mt-5">
+            계정이 없으신가요?{" "}
+            <Link to="/register" className="text-orange-700">
+              회원가입
+            </Link>
           </p>
         </div>
       </div>

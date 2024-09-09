@@ -20,14 +20,16 @@ const Register = () => {
     }
   };
   return (
-    <section>
+    <section className="py-10 flex justify-center">
       <div>
-        <h1>회원가입</h1>
+        <h1 className="font-bold mb-3 text-2xl">회원가입</h1>
         <AuthForm mode="signup" onSubmit={handleSignUp} />
         <div>
-          <p>
+          <p className="mt-5">
             이미 계정이 있으신가요? {""}
-            <Link to="/login">로그인</Link>
+            <Link to="/login" className="text-orange-700">
+              로그인
+            </Link>
           </p>
         </div>
       </div>

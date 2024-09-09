@@ -12,9 +12,9 @@ const Layout = ({ user, setUser }) => {
   return (
     <div>
       <header>
-        <nav className="flex justify-between py-5 px-10 l m-auto">
+        <nav className="flex justify-between py-5 px-10 l m-auto shadow-md">
           <Link to="/">홈</Link>
-          <div>
+          <div className="flex flex-row gap-3">
             {user ? ( // 로그인 한 유저에게 보이는 버튼
               <>
                 <Link to={"/profile"}>프로필</Link>
