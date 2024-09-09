@@ -1,3 +1,48 @@
 {
-  "testResults": []
+  "users": [
+    {
+      "id": "a",
+      "password": "123",
+      "nickname": "b",
+      "results": [
+        {
+          "answer": [
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예",
+            "예"
+          ],
+          "result": "ESTP",
+          "date": "2024-01-01T12:00:00Z",
+          "visibility": true
+        }
+      ]
+    },
+    {
+      "id": "z",
+      "password": "z",
+      "nickname": "z"
+    },
+    {
+      "id": "z",
+      "password": "z",
+      "nickname": "z"
+    }
+  ]
 }
