@@ -1,11 +1,12 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
-const Layout = ({ user, setUser }) => {
+const Layout = ({ isLogin, setIsLogin }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     // 로그아웃 시
-    setUser(null); // 상태를 null로 변경하고
+    setIsLogin(false); // 상태를 null로 변경하고
+    localStorage.removeItem("token");
     navigate("/login"); // 로그인페이지로 이동
   };
 
@@ -15,7 +16,7 @@ const Layout = ({ user, setUser }) => {
         <nav className="flex justify-between py-5 px-10 l m-auto shadow-md">
           <Link to="/">홈</Link>
           <div className="flex flex-row gap-3">
-            {user ? ( // 로그인 한 유저에게 보이는 버튼
+            {isLogin ? ( // 로그인 한 유저에게 보이는 버튼
               <>
                 <Link to={"/profile"}>프로필</Link>
                 <Link to={"/test"}>테스트</Link>

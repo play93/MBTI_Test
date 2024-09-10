@@ -3,9 +3,24 @@ import TestForm from "../components/TestForm";
 import Calculator from "../utils/Calculator";
 import { createTestResult } from "../api/testResults";
 import { questions } from "../data/questions";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const TestPage = ({ user }) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (resultData) => {
+      return await createTestResult(resultData);
+    },
+    onSuccess: () => {
+      navigate("/results");
+      queryClient.invalidateQueries(["results"]);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   const handleTestSubmit = async (answers) => {
     const result = Calculator(answers, questions);
@@ -17,8 +32,7 @@ const TestPage = ({ user }) => {
       date: new Date().toISOString(),
       visibility: true,
     };
-    await createTestResult(resultData);
-    navigate("/results");
+    mutation.mutate(resultData);
   };
   return (
     <div className="py-10 flex justify-center flex-col w-1/2 m-auto">

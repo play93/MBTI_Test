@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AuthURL from "../components/AuthURL";
+import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
 
 const ProfilePage = ({ user, setUser }) => {
   const [nickname, setNickname] = useState(user?.nickname || "");
@@ -10,18 +11,38 @@ const ProfilePage = ({ user, setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await AuthURL.put(`/profile`, {
-      nickname,
-    });
+    const token = localStorage.getItem(ACCESS_TOKEN_LOCALSTORAGE_KEY);
+    const response = await AuthURL.patch(
+      `/profile`,
+      { nickname },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.data.success) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        nickname: response.data.nickname,
+      }));
+
+      alert("닉네임이 변경되었습니다.");
+      setNickname("");
+    } else {
+      alert("닉네임 변경에 실패했습니다.");
+    }
     console.log("response", response);
-    setUser((prevUser) => ({ ...prevUser, nickname }));
   };
+  console.log(user);
+  console.log(localStorage.getItem("token"));
 
   return (
     <div className="py-10 flex justify-center">
       <div>
         <h1 className="font-bold mb-3 text-2xl">프로필 수정</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex gap-3 flex-col">
           <div>
             <label>닉네임</label>
             <input

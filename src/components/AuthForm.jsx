@@ -1,7 +1,11 @@
 import { useState } from "react";
 import AuthURL from "./AuthURL";
+import { useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
 
-const AuthForm = ({ mode, onSubmit }) => {
+const AuthForm = ({ mode, setIsLogin, setUser }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -25,6 +29,18 @@ const AuthForm = ({ mode, onSubmit }) => {
         password: formData.password,
       });
       console.log("response.data", response.data);
+      localStorage.setItem(
+        ACCESS_TOKEN_LOCALSTORAGE_KEY,
+        response.data.accessToken
+      );
+      setUser({
+        id: response.data.id,
+        nickname: response.data.nickname,
+        accessToken: response.data.accessToken,
+      });
+      setIsLogin(true);
+
+      navigate("/");
     } else if (mode === "signup") {
       // 회원가입 할 경우
       const response = await AuthURL.post("/register", {
@@ -33,8 +49,10 @@ const AuthForm = ({ mode, onSubmit }) => {
         nickname: formData.nickname,
       });
       console.log("response.data", response.data);
+
+      // 회원가입 완료시 로그인페이지로 이동
+      navigate("/login");
     }
-    onSubmit(formData);
   };
 
   return (

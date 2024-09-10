@@ -21,6 +21,7 @@ export const login = async (userData) => {
 
 // 프로필 가져오기
 export const getUserProfile = async (token) => {
+  // 토큰을 로컬스토리지에 저장해야함 => AuthForm.jsx에서
   const response = await axios.get("/profile", token);
   return response.data;
 };
