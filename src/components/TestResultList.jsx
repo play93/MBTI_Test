@@ -1,18 +1,12 @@
 import TestResultItem from "./TestResultItem";
 
-const TestResultList = ({ result, user, onUpdate, onDelete }) => {
+const TestResultList = ({ result, user }) => {
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-10 py-10">
       {result
         .filter((result) => result.visibility || result.userId === user.id)
         .map((result) => (
-          <TestResultItem
-            key={result.id}
-            result={result}
-            user={user}
-            onUpdate={onUpdate}
-            onDelete={onDelete}
-          />
+          <TestResultItem key={result.id} result={result} user={user} />
         ))}
     </div>
   );

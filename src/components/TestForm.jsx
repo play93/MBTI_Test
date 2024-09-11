@@ -2,7 +2,7 @@ import { useState } from "react";
 import { questions } from "../data/questions";
 import BaseURL from "./BaseURL";
 
-const TestForm = ({ onSubmit }) => {
+const TestForm = ({ onSubmit, user }) => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
 
   // 답변을 선택할 때
@@ -18,6 +18,7 @@ const TestForm = ({ onSubmit }) => {
     onSubmit(answers); // 답변 전달
 
     const response = await BaseURL.post("/results", {
+      userId: user.id,
       answers,
       date: new Date().toISOString(),
     });

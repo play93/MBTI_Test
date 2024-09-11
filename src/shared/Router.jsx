@@ -20,7 +20,7 @@ const Router = () => {
           path="/"
           element={<Layout isLogin={isLogin} setIsLogin={setIsLogin} />}
         >
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home isLogin={isLogin} />} />
           <Route
             path="/login"
             element={<Login setUser={setUser} setIsLogin={setIsLogin} />}
@@ -49,6 +49,7 @@ const Router = () => {
                 <TestResultPage user={user} />
               </ProtectedRoute>
             }
+            user={user}
           />
         </Route>
       </Routes>

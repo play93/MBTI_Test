@@ -34,7 +34,7 @@ const AuthForm = ({ mode, setIsLogin, setUser }) => {
         response.data.accessToken
       );
       setUser({
-        id: response.data.id,
+        id: response.data.userId,
         nickname: response.data.nickname,
         accessToken: response.data.accessToken,
       });

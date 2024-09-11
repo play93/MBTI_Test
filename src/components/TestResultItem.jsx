@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import {
   deleteTestResult,
   updateTestResultVisibility,
@@ -23,7 +24,9 @@ const mbtiDescriptions = {
   ENTJ: "결단력 있고 목표 지향적이며, 리더십을 발휘합니다.",
 };
 
-const TestResultItem = ({ result, user, onUpdate, onDelete }) => {
+const TestResultItem = ({ result, user }) => {
+  const queryClient = useQueryClient();
+
   // 로그인한 사용자의 결과인지 확인
   const isOwner = result.userId === user.id;
 
@@ -39,7 +42,7 @@ const TestResultItem = ({ result, user, onUpdate, onDelete }) => {
     try {
       const newVisibility = !result.visibility; // 현재 공개여부의 반대값 을 선언해 서버에 업데이트 요청
       await updateTestResultVisibility(result.id, newVisibility);
-      onUpdate();
+      queryClient.invalidateQueries(["testResults", user.nickname]); // 이전의 내용(상태)을 썩은상태로 만들고 리패치해줌
     } catch (error) {
       console.error("테스트 결과의 공개/비공개 전환에 실패했습니다 : ", error);
       alert(
@@ -47,11 +50,15 @@ const TestResultItem = ({ result, user, onUpdate, onDelete }) => {
       );
     }
   };
+  console.log(result);
 
+  // 테스트 결과 삭제
   const handleDelete = async () => {
     try {
-      await deleteTestResult(result.id);
-      onDelete();
+      if (window.confirm("정말 삭제하시겠습니까?")) {
+        await deleteTestResult(result.userId, result.id);
+        queryClient.invalidateQueries(["testResults", user.nickname]); // 이전의 내용(상태)을 썩은상태로 만들고 리패치해줌
+      }
     } catch (error) {
       console.error("Delete failed : ", error);
       alert("Delete failed. Please try again");
@@ -59,19 +66,27 @@ const TestResultItem = ({ result, user, onUpdate, onDelete }) => {
   };
 
   return (
-    <div>
-      <div>
-        <h3>{result.nickname}</h3>
+    <div className="flex flex-col gap-3 p-5 border rounded-lg ">
+      <div className="flex flex-row justify-between gap-2">
+        <h3 className="font-bold">{result.nickname}</h3>
         <p>{formattedDate}</p>
       </div>
       <p>{result.result}</p>
       <p>{description}</p>
       {isOwner && (
-        <div>
-          <button onClick={handleToggleVisibility}>
+        <div className="flex flex-row justify-end gap-2">
+          <button
+            onClick={handleToggleVisibility}
+            className="shadow-md p-2 bg-black text-white rounded-xl"
+          >
             {result.visibility ? "비공개로 전환" : "공개로 전환"}
           </button>
-          <button onClick={handleDelete}>삭제</button>
+          <button
+            onClick={handleDelete}
+            className=" shadow-md p-2 bg-black text-white rounded-xl"
+          >
+            삭제
+          </button>
         </div>
       )}
     </div>

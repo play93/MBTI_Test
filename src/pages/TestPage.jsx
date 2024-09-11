@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import TestForm from "../components/TestForm";
-import Calculator from "../utils/Calculator";
+import calculator from "../utils/calculator";
 import { createTestResult } from "../api/testResults";
 import { questions } from "../data/questions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -23,7 +23,7 @@ const TestPage = ({ user }) => {
   });
 
   const handleTestSubmit = async (answers) => {
-    const result = Calculator(answers, questions);
+    const result = calculator(answers, questions);
     const resultData = {
       userId: user.id,
       nickname: user.nickname,

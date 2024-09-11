@@ -1,4 +1,4 @@
-const Calculator = (answers, questions) => {
+const calculator = (answers, questions) => {
   const scores = {
     E: 0,
     I: 0,
@@ -30,4 +30,4 @@ const Calculator = (answers, questions) => {
   return result;
 };
 
-export default Calculator;
+export default calculator;

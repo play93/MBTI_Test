@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
-const Home = ({ user }) => {
+const Home = ({ isLogin }) => {
   const navigate = useNavigate();
   const movePageHandler = (where) => {
-    if (user) {
+    if (isLogin) {
       navigate(where);
     } else {
       alert("로그인이 필요한 페이지 입니다");
