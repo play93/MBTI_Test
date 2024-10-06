@@ -19,33 +19,17 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
+            {/* 비로그인 페이지 */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/test"
-              element={
-                <ProtectedRoute>
-                  <TestPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/results"
-              element={
-                <ProtectedRoute>
-                  <TestResultPage />
-                </ProtectedRoute>
-              }
-            />
+
+            {/* 로그인페이지 */}
+            <Route element={<ProtectedRoute user={user} />}>
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/test" element={<TestPage />} />
+              <Route path="/results" element={<TestResultPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

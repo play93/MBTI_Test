@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const AuthData = useContext(AuthContext);
 
   console.log("ProtectedRoute user:", AuthData.user);
@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
     alert("로그인이 필요한 페이지 입니다");
     return <Navigate to="/login" />;
   }
-  return <>{children}</>;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
