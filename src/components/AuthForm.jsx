@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AuthURL from "./AuthURL";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
+import { AuthContext } from "../context/AuthContext";
 
-const AuthForm = ({ mode, setIsLogin, setUser }) => {
+const AuthForm = ({ mode }) => {
   const navigate = useNavigate();
+
+  const AuthData = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -33,12 +36,12 @@ const AuthForm = ({ mode, setIsLogin, setUser }) => {
         ACCESS_TOKEN_LOCALSTORAGE_KEY,
         response.data.accessToken
       );
-      setUser({
+      AuthData.setUser({
         id: response.data.userId,
         nickname: response.data.nickname,
         accessToken: response.data.accessToken,
       });
-      setIsLogin(true);
+      AuthData.setIsLogin(true);
 
       navigate("/");
     } else if (mode === "signup") {

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import AuthURL from "../components/AuthURL";
-import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { patchProfile } from "../api/patchProfile";
 
-const ProfilePage = ({ user, setUser }) => {
-  const [nickname, setNickname] = useState(user?.nickname || "");
+const ProfilePage = () => {
+  const AuthData = useContext(AuthContext);
+
+  const [nickname, setNickname] = useState(AuthData.user?.nickname || "");
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
@@ -11,21 +13,13 @@ const ProfilePage = ({ user, setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem(ACCESS_TOKEN_LOCALSTORAGE_KEY);
-    const response = await AuthURL.patch(
-      `/profile`,
-      { nickname },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.data.success) {
-      setUser((prevUser) => ({
+
+    const data = await patchProfile(nickname);
+
+    if (data.success) {
+      AuthData.setUser((prevUser) => ({
         ...prevUser,
-        nickname: response.data.nickname,
+        nickname: data.nickname,
       }));
 
       alert("닉네임이 변경되었습니다.");
@@ -33,9 +27,9 @@ const ProfilePage = ({ user, setUser }) => {
     } else {
       alert("닉네임 변경에 실패했습니다.");
     }
-    console.log("response", response);
+    console.log("response", data);
   };
-  console.log(user);
+  console.log(AuthData.user);
   console.log(localStorage.getItem("token"));
 
   return (

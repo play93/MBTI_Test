@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Layout from "./Layout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import TestPage from "../pages/TestPage";
 import TestResultPage from "../pages/TestResultPage";
-import { useState } from "react";
-import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
 
 const Router = () => {
@@ -14,46 +15,25 @@ const Router = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Layout isLogin={isLogin} setIsLogin={setIsLogin} />}
-        >
-          <Route path="/" element={<Home isLogin={isLogin} />} />
-          <Route
-            path="/login"
-            element={<Login setUser={setUser} setIsLogin={setIsLogin} />}
-          />
-          <Route path="/register" element={<Register setUser={setUser} />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute user={user} isLogin={isLogin}>
-                <ProfilePage user={user} setUser={setUser} isLogin={isLogin} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/test"
-            element={
-              <ProtectedRoute user={user} isLogin={isLogin}>
-                <TestPage user={user} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/results"
-            element={
-              <ProtectedRoute user={user} isLogin={isLogin}>
-                <TestResultPage user={user} />
-              </ProtectedRoute>
-            }
-            user={user}
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthContext.Provider value={{ user, setUser, isLogin, setIsLogin }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* 비로그인 페이지 */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* 로그인페이지 */}
+            <Route element={<ProtectedRoute user={user} />}>
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/test" element={<TestPage />} />
+              <Route path="/results" element={<TestResultPage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { questions } from "../data/questions";
-import BaseURL from "./BaseURL";
+import apiClient from "../api/apiClient";
 
 const TestForm = ({ onSubmit, user }) => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
@@ -17,7 +17,7 @@ const TestForm = ({ onSubmit, user }) => {
     e.preventDefault(); // 기본 동작 (새로고침)방지
     onSubmit(answers); // 답변 전달
 
-    const response = await BaseURL.post("/results", {
+    const response = await apiClient.post("/results", {
       userId: user.id,
       answers,
       date: new Date().toISOString(),
