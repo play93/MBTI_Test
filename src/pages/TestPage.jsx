@@ -4,9 +4,14 @@ import calculator from "../utils/calculator";
 import { createTestResult } from "../api/testResults";
 import { questions } from "../data/questions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-const TestPage = ({ user }) => {
+const TestPage = () => {
   const navigate = useNavigate();
+
+  const AuthData = useContext(AuthContext);
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -25,8 +30,8 @@ const TestPage = ({ user }) => {
   const handleTestSubmit = async (answers) => {
     const result = calculator(answers, questions);
     const resultData = {
-      userId: user.id,
-      nickname: user.nickname,
+      userId: AuthData.user.id,
+      nickname: AuthData.user.nickname,
       result,
       answers,
       date: new Date().toISOString(),

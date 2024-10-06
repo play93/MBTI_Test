@@ -1,15 +1,21 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
-const Home = ({ isLogin }) => {
+const Home = () => {
   const navigate = useNavigate();
+
+  const AuthData = useContext(AuthContext);
+
   const movePageHandler = (where) => {
-    if (isLogin) {
+    if (AuthData.isLogin) {
       navigate(where);
     } else {
       alert("로그인이 필요한 페이지 입니다");
       navigate("/login");
     }
   };
+
   return (
     <div className="flex flex-col gap-10 py-10">
       <h1 className="text-center text-2xl font-bold">무료성격테스트</h1>

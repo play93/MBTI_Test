@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AuthURL from "../components/AuthURL";
 import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
+import { AuthContext } from "../context/AuthContext";
 
-const ProfilePage = ({ user, setUser }) => {
-  const [nickname, setNickname] = useState(user?.nickname || "");
+const ProfilePage = () => {
+  const AuthData = useContext(AuthContext);
+
+  const [nickname, setNickname] = useState(AuthData.user?.nickname || "");
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
@@ -23,7 +26,7 @@ const ProfilePage = ({ user, setUser }) => {
       }
     );
     if (response.data.success) {
-      setUser((prevUser) => ({
+      AuthData.setUser((prevUser) => ({
         ...prevUser,
         nickname: response.data.nickname,
       }));
@@ -35,7 +38,7 @@ const ProfilePage = ({ user, setUser }) => {
     }
     console.log("response", response);
   };
-  console.log(user);
+  console.log(AuthData.user);
   console.log(localStorage.getItem("token"));
 
   return (
