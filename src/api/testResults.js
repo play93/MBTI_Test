@@ -1,4 +1,4 @@
-import BaseURL from "../components/BaseURL";
+import BaseURL from "../components/apiClient";
 
 // 새로운 테스트 결과 저장
 export const createTestResult = async (resultData) => {
@@ -12,7 +12,7 @@ export const createTestResult = async (resultData) => {
 
 // 테스트 결과를 가져옴
 export const getTestResults = async () => {
-  const response = await BaseURL.get(`/testResults`); // 닉네임으로 사용자 찾기
+  const response = await BaseURL.get(`/testResults`);
   return response.data;
 };
 

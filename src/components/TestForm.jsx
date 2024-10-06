@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { questions } from "../data/questions";
-import BaseURL from "./BaseURL";
+import BaseURL from "./apiClient";
 
 const TestForm = ({ onSubmit, user }) => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
