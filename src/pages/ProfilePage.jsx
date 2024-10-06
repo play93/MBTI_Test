@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
-import AuthURL from "../components/AuthURL";
-import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "../constants/index";
 import { AuthContext } from "../context/AuthContext";
+import { patchProfile } from "../api/patchProfile";
 
 const ProfilePage = () => {
   const AuthData = useContext(AuthContext);
@@ -14,21 +13,13 @@ const ProfilePage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem(ACCESS_TOKEN_LOCALSTORAGE_KEY);
-    const response = await AuthURL.patch(
-      `/profile`,
-      { nickname },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.data.success) {
+
+    const data = await patchProfile(nickname);
+
+    if (data.success) {
       AuthData.setUser((prevUser) => ({
         ...prevUser,
-        nickname: response.data.nickname,
+        nickname: data.nickname,
       }));
 
       alert("닉네임이 변경되었습니다.");
@@ -36,7 +27,7 @@ const ProfilePage = () => {
     } else {
       alert("닉네임 변경에 실패했습니다.");
     }
-    console.log("response", response);
+    console.log("response", data);
   };
   console.log(AuthData.user);
   console.log(localStorage.getItem("token"));

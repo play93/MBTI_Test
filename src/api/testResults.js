@@ -1,4 +1,4 @@
-import BaseURL from "../components/apiClient";
+import BaseURL from "./apiClient";
 
 // 새로운 테스트 결과 저장
 export const createTestResult = async (resultData) => {
