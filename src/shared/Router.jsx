@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Layout from "./Layout";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import TestPage from "../pages/TestPage";
 import TestResultPage from "../pages/TestResultPage";
-import { useState } from "react";
-import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
-import { AuthContext } from "../context/AuthContext";
 
 const Router = () => {
   const [user, setUser] = useState(null);
@@ -45,7 +45,6 @@ const Router = () => {
                   <TestResultPage />
                 </ProtectedRoute>
               }
-              user={user}
             />
           </Route>
         </Routes>

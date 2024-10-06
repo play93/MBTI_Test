@@ -11,14 +11,13 @@ export const createTestResult = async (resultData) => {
 };
 
 // 테스트 결과를 가져옴
-export const getTestResults = async (nickname) => {
-  console.log("nickname => ", nickname);
+export const getTestResults = async () => {
   const response = await BaseURL.get(`/testResults`); // 닉네임으로 사용자 찾기
   return response.data;
 };
 
 // 테스트 결과를 삭제
-export const deleteTestResult = async (userId, id) => {
+export const deleteTestResult = async (id) => {
   const response = await BaseURL.delete(`/testResults/${id}`);
   return response.data;
 };
