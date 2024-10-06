@@ -1,21 +1,6 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const AuthData = useContext(AuthContext);
-
-  const movePageHandler = (where) => {
-    if (AuthData.isLogin) {
-      navigate(where);
-    } else {
-      alert("로그인이 필요한 페이지 입니다");
-      navigate("/login");
-    }
-  };
-
   return (
     <div className="flex flex-col gap-10 py-10">
       <h1 className="text-center text-2xl font-bold">무료성격테스트</h1>
@@ -47,9 +32,6 @@ const Home = () => {
       <Link
         to="test"
         className="text-center bg-black text-white w-3/12 m-auto	py-5	rounded-xl"
-        onClick={() => {
-          movePageHandler("/test");
-        }}
       >
         내 성격 알아보러 가기
       </Link>
